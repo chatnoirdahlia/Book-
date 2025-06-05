@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Lightbox Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    ._df_button, ._df_thumb {
+      display: inline-block;
+      cursor: pointer;
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+
+    ._df_thumb img {
+      width: 150px;
+      height: auto;
+      display: block;
+      margin-top: 5px;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox-content {
+      background: white;
+      width: 80%;
+      height: 80%;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .lightbox-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>PDF Lightbox Demo</h2>
+
+  <!--Button Lightbox Usage-->
+  <div class="_df_button" source="http://www.yoursite.com/books/intro.pdf">Intro Book</div>
+
+  <!--Thumbnail Lightbox Usage-->
+  <div class="_df_thumb" 
+       source="http://www.yoursite.com/books/intro.pdf"
+       thumb="http://www.yoursite.com/books/thumbs/intro.jpg">
+    Intro Book
+    <img src="http://www.yoursite.com/books/thumbs/intro.jpg" alt="Intro Book Thumbnail">
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+      <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+      <iframe id="lightboxFrame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('lightboxModal');
+    const frame = document.getElementById('lightboxFrame');
+
+    function openLightbox(src) {
+      frame.src = src;
+      modal.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      modal.style.display = 'none';
+      frame.src = '';
+    }
+
+    document.querySelectorAll('._df_button, ._df_thumb').forEach(el => {
+      el.addEventListener('click', () => {
+        const src = el.getAttribute('source');
+        openLightbox(src);
+      });
+    });
+  </script>
+
+</body>
+</html>
